@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <!-- Background Image -->
+    <img class="bg" src="D:\Sem 6\CP II\VS Code\img\background.jpg">
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Content Section -->
+        <div class="content">
+            <p>Welcome</p>
+        </div>
+        <!-- Login/Register Box -->
+        <div class="logreg-box">
+            <!-- Login/Register Form Box -->
+            <div class="form-box login">
+                <!-- Registration Form -->
+                <form id="form" class="form" action="/register" method="POST">
+                    <h2>Register</h2>
+                    <!-- Username Input Field -->
+                    <div class="input-box">
+                        <input type="text" name="username" id="name">
+                        <label>Username</label> 
+                        <span style="color: red;" id="name_error"></span>
+                    </div>
+                    <!-- Email Input Field -->
+                    <div class="input-box">
+                        <input type="text" name="email" id="email">
+                        <label>Email</label>
+                        <span style="color: red;" id="email_error"></span>
+                    </div>
+                    <!-- Password Input Field -->
+                    <div class="input-box">
+                        <input type="password" name="password" id="password">
+                        <label>Password</label>
+                        <span style="color:red;" id="pass_error"></span>
+                    </div>
+                    <!-- Confirm Password Input Field -->
+                    <div class="input-box">
+                        <input type="password" name="confirmPassword" id="password2">
+                        <label>Re-enter password</label>
+                        <span style="color:red;" id="pass_error2"></span>
+                    </div>
+                    <!-- Submit Button -->
+                    <input id="submit" class="btn" type="submit" value="Submit">
+                    <!-- Login Link -->
+                    <div class="login-register">
+                        <p>Already User: <a href="login.html">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    </div>
+
+    <!-- Scripts -->
+    <script src="server.js"></script>
+    <script defer src="./script.js"></script>
+</body>
+</html>

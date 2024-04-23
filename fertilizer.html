@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page</title>
+    <link rel="stylesheet" href="page.css">
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><button class="nav-button"><a href="home.html">Home</a></button></li>
+            <li><button class="nav-button"><a href="crop">Crop</a></button></li>
+            <li><button class="nav-button"><a href="fertilizer.">Fertilizers</a></button></li>
+            <li><button class="nav-button"><a href="#pesticide">Pesticides</a></button></li>
+            <li><button class="nav-button"><a href="#about">About Us</a></button></li>
+            <li><button class="nav-button"><a href="#contact">Contact</a></button></li>
+        </ul>
+        <div class="rightNav">
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button class="btn btn-sm">Search</button>
+        </div>
+    </nav>
+
+    <!-- Display fetched fertilizer data -->
+    <div class="fertilizer-container">
+        <div id="fertilizerDetails" class="fertilizer-details">
+            <div class="fertilizer-details-content">
+                <!-- Other data goes here -->
+                <h2>Fertilizer Name</h2>
+                <p><strong>Use:</strong> Fertilizer Use</p>
+                <p><strong>Components:</strong> Fertilizer Components</p>
+                <p><strong>Description:</strong> Fertilizer Description</p>
+            </div>
+            <img src="data:image/jpeg;base64,IMAGE_DATA_HERE" alt="Fertilizer Name" class="fertilizer-image">
+        </div>
+        <div class="pagination">
+            <button id="previousBtn" class="btn" onclick="previousFertilizer()">Previous</button>
+            <button id="nextBtn" class="btn" onclick="nextFertilizer()">Next</button>
+        </div>
+    </div>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Variables to store fetched fertilizer data and current index
+        let fertilizers = [];
+        let currentIndex = 0;
+
+        // Function to fetch fertilizer data from server
+        function fetchFertilizers() {
+            $.get('/fertilizers', (data) => {
+                fertilizers = data;
+                displayFertilizer(currentIndex);
+            });
+        }
+        // Function to display fertilizer details
+        function displayFertilizer(index) {
+            const fertilizer = fertilizers[index];
+            if (!fertilizer || !fertilizer.Image || !fertilizer.Image.data) {
+                console.error('Error: Image data not available.');
+                return;
+            }
+
+            // Convert image data to base64 string
+            const imageData = arrayBufferToBase64(fertilizer.Image.data);
+            if (!imageData) {
+                console.error('Error: Failed to convert image data to base64.');
+                return;
+            }
+
+            // Display fertilizer details using jQuery
+            $('#fertilizerDetails').html(`
+                <div class="fertilizer-details-content">
+                    <h2>${fertilizer.Name}</h2>
+                    <p><strong>Use:</strong> ${fertilizer.Use}</p>
+                    <p><strong>Components:</strong> ${fertilizer.Components}</p>
+                    <p><strong>Description:</strong> ${fertilizer.Description}</p>
+                    <img src="data:image/jpeg;base64,${imageData}" alt="${fertilizer.Name}" class="fertilizer-image">
+                </div>
+            `);
+        }
+
+        // Function to convert array buffer to base64
+        function arrayBufferToBase64(buffer) {
+            let binary = '';
+            const bytes = new Uint8Array(buffer);
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        // Function to show next fertilizer
+        function nextFertilizer() {
+            if (currentIndex < fertilizers.length - 1) {
+                currentIndex++;
+                displayFertilizer(currentIndex);
+            }
+        }
+
+        // Function to show previous fertilizer
+        function previousFertilizer() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayFertilizer(currentIndex);
+            }
+        }
+
+        // Load fertilizer data when the page is ready
+        $(document).ready(() => {
+            fetchFertilizers();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+/* Global styles */
+* {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; /* Default font stack */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Background styling */
+.bg {
+    background: url("./img/background.jpg") no-repeat; /* Background image */
+    height: 100vh; /* Full height of the viewport */
+    width: 100%; /* Full width of the viewport */
+    background-size: cover; /* Cover the entire element */
+    background-position: center; /* Center the background image */
+    filter: blur(2px); /* Apply blur effect */
+    overflow: hidden; /* Disable scroll */
+}
+
+/* Main container styling */
+.container {
+    position: absolute; /* Positioning */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Centering trick */
+    width: 800px; /* Set width */
+    height: 550px; /* Set height */
+    background: url("./img/a.jpg"); /* Background image */
+    background-repeat: no-repeat;
+    background-size: 400px; /* Cover the entire element */
+    background-position: center; /* Center the background image */
+    background-position-x: 0%;
+    border-radius: 10px; /* Rounded corners */
+    margin-top: 20px; /* Add margin at the top */
+    box-shadow: -1px 0 10px #000; /* Box shadow */
+}
+
+/* Content styling for specially welcome*/
+.container .content {
+    position: absolute; /* Positioning */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 60%; /* Set width */
+    height: 100%; /* Set height */
+    background: transparent; /* Transparent background */
+}
+
+.container .content p {
+    font-size: 42px; /* Font size */
+    font-style: italic; /* Italic font style */
+    font-weight: 600; /* Font weight */
+    margin-top: 38%; /* Add margin at the top */
+    text-align: center; /* Center text */
+}
+
+/* Login/Register box styling */
+.container .logreg-box {
+    position: absolute; /* Positioning */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the right */
+    width: 50%; /* Calculate width */
+    height: 100%; /* Set height */
+}
+
+.logreg-box .form-box {
+    display: flex; /* Display as flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Set width */
+    height: 100%; /* Set height */
+    background: transparent; /* Transparent background */
+    backdrop-filter: blur(15px); /* Apply blur effect */
+    border-top-right-radius: 10px; /* Rounded corners */
+    border-bottom-right-radius: 10px; /* Rounded corners */
+}
+
+.form-box h2 {
+    font-size: 32px; /* Font size */
+    text-align: center; /* Center text */
+}
+
+/* Input box styling */
+.form-box .input-box {
+    position: relative; /* Positioning */
+    width: 300px; /* Set width */
+    height: 50px; /* Set height */
+    border-bottom: 2px solid #e4e4e4; /* Bottom border */
+    margin: 30px 0; /* Add margin */
+}
+
+.input-box input {
+    width: 100%; /* Set width */
+    height: 100%; /* Set height */
+    background: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+    font-size: 16px; /* Font size */
+    color: black; /* Text color */
+    font-weight: 500; /* Font weight */
+    padding-right: 28px; /* Add padding */
+}
+
+.input-box label {
+    position: absolute; /* Positioning */
+    top: 50%; /* Align to the center vertically */
+    left: 0; /* Align to the left */
+    transform: translateY(-50%); /* Center vertically */
+    font-size: 16px; /* Font size */
+    font-weight: 500; /* Font weight */
+    pointer-events: none; /* Disable pointer events */
+    transition: .5 ease; /* Transition effect */
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -5px; /* Move label up */
+}
+
+/* Login/Register link styling */
+.login-register {
+    color: #e4e4e4; /* Text color */
+    text-decoration: none; /* Remove underline */
+}
+
+.login-register a:hover {
+    color: aqua; /* Text color on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Button styling */
+.btn {
+    width: 50%; /* Set width */
+    height: 30px; /* Set height */
+    background: yellowgreen; /* Background color */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Cursor style */
+    font-size: 16px; /* Font size */
+    font-weight: 500; /* Font weight */
+    color: white; /* Text color */
+    margin-left: 75px; /* Add margin */
+    box-shadow: 0 0 10px rgba(90, 5, 1, 1); /* Add box shadow */
+}
+
+.form-box .login-register {
+    font-size: 14.5px; /* Font size */
+    font-weight: 500; /* Font weight */
+    text-align: center; /* Center text */
+    margin-top: 25px; /* Add margin at the top */
+}
+
+.login-register p a {
+    color: white; /* Text color */
+    font-weight: 600; /* Font weight */
+    text-decoration: none; /* Remove underline */
+}
+
+.login-register p a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/*
+Reference video link for only to understand me(devloper)
+https://youtu.be/KL4--AJrJHQ?si=hHLzt_kiNIDZTdGo
+*/
