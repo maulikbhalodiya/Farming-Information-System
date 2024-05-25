@@ -1,48 +1,97 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home Page </title>
-        <link rel="stylesheet" href="home.css">
-    </head>
-    <body>
-        <nav class="navbar">
-            <ul class="nav-list">
-                <!--<li><button class="nav-button"><a href="#home">Login</a></button></li> -->
-                <li><button class="nav-button"><a href="home.html">Home</a></button></li>
-                <li><button class="nav-button"><a href="#crop">Crop</a></button></li>
-                <li><button class="nav-button"><a href="fertilizer.html">Fertilizers</a></button></li>
-                <li><button class="nav-button"><a href="#pesticide">Pesticides</a></button></li>
-                <li><button class="nav-button"><a href="#about">About Us</a></button></li>
-                <li><button class="nav-button"><a href="#contact">Contact</a></button></li>
-            </ul>
-            <div class="rightNav">
-                <input type="text" name="search" id="search" placeholder="Search">
-                <button class="btn btn-sm">Search</button>
-            </div>
-        </nav>
-        <!-- <div  class="container">
-            <div class="imgbg"></div>
-            <h2 id="home">Welcome to our website</h2>
-            <div class="home_img">
-                <img src="./img1.jpg" alt="Image"/> 
-            </div>
+<html lang="en">
 
-        </div> -->
-        <div class="cover">
-            <div class="box">
-                <div class="image-container">
-                    <img src="/img/img.jpg" alt="Image" width="500" height="400" /> 
-                </div>
-                <div class="text-container">
-                    <p>Welcome</p>
-                    <P>Here you get 
-                        information 
-                        related to farming</P>
-                </div>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="pesticide.css">
+    <style>
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50; /* Dark Blue */
+            color: #ffffff; /* White */
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 70px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999; /* Ensure it's above other elements */
+        }
+
+        .btn {
+            background-color: #007bff; /* Blue */
+            color: #ffffff; /* White */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker Blue on hover */
+        }
+
+        /* Centering Text and Image */
+        .main-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-text {
+            margin-bottom: 20px;
+        }
+
+        .welcome-image {
+            width: 300px; /* Adjust image width as needed */
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar" style="background-color: #2c3e50; color: #ffffff;">
+        <ul class="nav-list">
+            <li><button class="nav-button"><a href="home.html">Home</a></button></li>
+            <li><button class="nav-button"><a href="crop.html">Crop</a></button></li>
+            <li><button class="nav-button"><a href="fertilizer.html">Fertilizers</a></button></li>
+            <li><button class="nav-button active"><a href="pesticide.html">Pesticides</a></button></li>
+            <li><button class="nav-button"><a href="about.html">About Us</a></button></li>
+            <li><button class="nav-button"><a href="contact.html">Contact</a></button></li>
+        </ul>
+        <div class="rightNav">
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button class="btn btn-sm">Search</button>
         </div>
-        
-    </body>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <h1 class="welcome-text">Welcome to Our Agricultural Website</h1>
+        <img src="/img/img.jpg " alt="Welcome Image" class="welcome-image">
+        <p style="font-size: large;">This is the place where you can find all information about crops, fertilizers, pesticides, and more to enhance your agricultural knowledge and practices.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 YourWebsite. All rights reserved.
+    </footer>
+</body>
+
 </html>

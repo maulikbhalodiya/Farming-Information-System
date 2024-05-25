@@ -1,0 +1,170 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: lightblue;
+}
+
+/* Navigation bar styles */
+.navbar {
+    display: flex;
+    position: sticky;
+    align-items: center;
+    justify-content: space-between;
+    top: 0px;
+    background: rgba(70, 123, 80);
+    background-blend-mode: darken;
+    background-size: cover;
+    color: white;
+    padding: 10px 20px;
+}
+
+/* Navigation list styles */
+.nav-list {
+    display: flex;
+    list-style: none;
+}
+
+.nav-list li {
+    margin-right: 20px;
+}
+
+/* Remove margin from the last list item */
+.nav-list li:last-child {
+    margin-right: 0;
+}
+
+/* Navigation button styles */
+.nav-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.nav-button a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 8px 12px;
+    border: 2px solid #ffd700;
+    border-radius: 7px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Style for navigation button hover state */
+.nav-button a:hover {
+    background-color: #ffd700;
+    color: #000;
+}
+
+/* Styles for the right navigation section */
+.rightNav {
+    text-align: right;
+}
+
+/* Styles for the search input */
+#search {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+}
+
+/* Button styles */
+.btn {
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Style for button hover state */
+.btn:hover {
+    background-color: #000;
+    color: #ffd700;
+}
+
+/* Pagination styles */
+.pagination {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for pagination buttons */
+.pagination button {
+    margin: 0 10px;
+}
+
+/* Crop container styles */
+.crop-container {
+    margin-top: 20px;
+}
+
+/* Crop details container styles */
+.crop-details {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.crop-details h2 {
+    margin-top: 0;
+}
+
+.crop-details p {
+    margin: 10px 0;
+}
+
+.crop-details img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 350px;
+}
+
+/* Media Queries for Responsive Design */
+@media only screen and (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-list li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .rightNav {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #search {
+        width: 100%;
+    }
+}

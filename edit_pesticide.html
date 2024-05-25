@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pesticide</title>
+</head>
+<style>
+    /* Reset default margin and padding */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #E9F1FA; /* Light gray background */
+        color: #333;
+        padding: 20px;
+    }
+
+    /* Form container styles */
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff; /* White background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form title styles */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        font-weight: bold;
+    }
+
+    /* Input styles */
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Button styles */
+    button {
+        background-color: #4caf50; /* Green button */
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-right: 10px;
+    }
+
+    /* Style for button hover state */
+    button:hover {
+        background-color: #09120a; /* Darker green on hover */
+    }
+
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0; /* Light gray header background */
+    }
+
+</style>
+
+<body>
+    <h1>Edit Pesticide</h1>
+    
+    <form id="editPesticideForm" action="/submit_pesticide" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="pesticideId" name="id" value="">
+        <label for="ProductName">Product Name:</label>
+        <input type="text" id="ProductName" name="ProductName" required><br><br>
+
+        <label for="Description">Description:</label><br>
+        <textarea id="Description" name="Description" rows="4" required></textarea><br><br>
+
+        <label for="Mode_of_Action">Mode of Action:</label>
+        <input type="text" id="Mode_of_Action" name="Mode_of_Action" required><br><br>
+
+        <label for="Crops">Crops:</label>
+        <input type="text" id="Crops" name="Crops" required><br><br>
+
+        <label for="Dosage_per_Acre">Dosage per Acre:</label>
+        <input type="text" id="Dosage_per_Acre" name="Dosage_per_Acre" required><br><br>
+
+        <label for="Pack_Size">Pack Size:</label>
+        <input type="text" id="Pack_Size" name="Pack_Size" required><br><br>
+
+        <label for="Features_and_Benefits">Features and Benefits:</label><br>
+        <textarea id="Features_and_Benefits" name="Features_and_Benefits" rows="4" required></textarea><br><br>
+
+        <label for="Image">Image:</label>
+        <input type="file" id="Image" name="image" accept="image/png" required><br><br>
+
+        <!-- Button for updating pesticide -->
+        <button type="submit" id="updateButton">Update Pesticide</button>
+
+        <!-- Button for inserting new pesticide -->
+        <button type="button" id="insertButton">Insert New Pesticide</button>
+    </form>
+
+    <!-- Table to display pesticide details -->
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Mode of Action</th>
+                <th>Crops</th>
+                <th>Dosage per Acre</th>
+                <th>Pack Size</th>
+                <th>Features and Benefits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="pesticideTableBody">
+            <!-- Pesticide details will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Script to populate form with pesticide data and handle button actions -->
+    <script>
+        // Function to fetch pesticide details and populate the form
+        function populatePesticideForm(pesticideId) {
+            fetch(`/pesticide_details/${pesticideId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('pesticideId').value = data.id;
+                    document.getElementById('ProductName').value = data.ProductName;
+                    document.getElementById('Description').value = data.Description;
+                    document.getElementById('Mode_of_Action').value = data.Mode_of_Action;
+                    document.getElementById('Crops').value = data.Crops;
+                    document.getElementById('Dosage_per_Acre').value = data.Dosage_per_Acre;
+                    document.getElementById('Pack_Size').value = data.Pack_Size;
+                    document.getElementById('Features_and_Benefits').value = data.Features_and_Benefits;
+                    // You may need additional code to handle image display or preview
+                });
+        }
+
+        // Call populatePesticideForm function with the pesticide ID if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pesticideId = urlParams.get('id');
+        if (pesticideId) {
+            populatePesticideForm(pesticideId);
+        }
+
+        // Button click event for inserting new pesticide
+        document.getElementById('insertButton').addEventListener('click', () => {
+            // Get the values of the pesticide details from the form
+            const ProductName = document.getElementById('ProductName').value;
+            const Description = document.getElementById('Description').value;
+            const Mode_of_Action = document.getElementById('Mode_of_Action').value;
+            const Crops = document.getElementById('Crops').value;
+            const Dosage_per_Acre = document.getElementById('Dosage_per_Acre').value;
+            const Pack_Size = document.getElementById('Pack_Size').value;
+            const Features_and_Benefits = document.getElementById('Features_and_Benefits').value;
+            const Image = document.getElementById('Image').files[0];
+
+            // Create a FormData object to store the pesticide details
+            const formData = new FormData();
+            formData.append('ProductName', ProductName);
+            formData.append('Description', Description);
+            formData.append('Mode_of_Action', Mode_of_Action);
+            formData.append('Crops', Crops);
+            formData.append('Dosage_per_Acre', Dosage_per_Acre);
+            formData.append('Pack_Size', Pack_Size);
+            formData.append('Features_and_Benefits', Features_and_Benefits);
+            formData.append('image', Image);
+
+            // Send an AJAX request to insert the pesticide data into the database
+            fetch('/insert_pesticide', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Pesticide inserted successfully');
+                    // Redirect to the admin dashboard page after successful insertion
+                    window.location.href = '/admin_dashboard.html';
+                } else {
+                    throw new Error('Failed to insert pesticide');
+                }
+            })
+            .catch(error => {
+                console.error('Error inserting pesticide:', error);
+                alert('Failed to insert pesticide');
+            });
+        });
+
+        // Fetch and display all pesticide details in the table
+        fetch('/all_pesticides')
+            .then(response => response.json())
+            .then(pesticides => {
+                const pesticideTableBody = document.getElementById('pesticideTableBody');
+                pesticides.forEach(pesticide => {
+                    const row = `<tr>
+                        <td>${pesticide.ProductName}</td>
+                        <td>${pesticide.Description}</td>
+                        <td>${pesticide.Mode_of_Action}</td>
+                        <td>${pesticide.Crops}</td>
+                        <td>${pesticide.Dosage_per_Acre}</td>
+                        <td>${pesticide.Pack_Size}</td>
+                        <td>${pesticide.Features_and_Benefits}</td>
+                        <td>
+                            <button onclick="populatePesticideForm(${pesticide.id})">Edit</button>
+                            <button onclick="deletePesticide(${pesticide.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                    pesticideTableBody.insertAdjacentHTML('beforeend', row);
+                });
+            });
+
+        // Function to delete pesticide
+        function deletePesticide(pesticideId) {
+            if (confirm('Are you sure you want to delete this pesticide?')) {
+                fetch(`/delete_pesticide/${pesticideId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Refresh the page after successful deletion
+                        location.reload();
+                    } else {
+                        throw new Error('Failed to delete pesticide');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting pesticide:', error);
+                    alert("Failed to delete pesticide");
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

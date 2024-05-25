@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="page.css">
+    <style>
+        
+        .navbar {
+            background-color: #2c3e50; /* Blue */
+            color: #ffffff; /* White */
+        }
+
+        /* Content Box Styles */
+        .about-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed height to min-height for responsiveness */
+            background-color: lightblue; /* Light Gray background */
+            color: #343a40; /* Dark Gray text color */
+            padding: 50px 20px; /* Added padding */
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .about-content h1 {
+            font-size: 36px; /* Larger font size for the heading */
+            margin: 0; /* Remove all margins */
+            color: #2c3e50; /* Blue color for the heading */
+        }
+
+        .about-content p {
+            font-size: 18px; /* Increased font size for paragraphs */
+            line-height: 1.6; /* Improved line spacing for better readability */
+            margin-bottom: 20px; /* Added margin below paragraphs */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50; /* Dark Blue */
+            color: #ffffff; /* White */
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Hide scrollbar */
+        body {
+            overflow: hidden;
+            background-color: lightblue;
+        }
+        .btn {
+            background-color: #007bff; /* Blue */
+            color: #ffffff; /* White */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker Blue on hover */
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><button class="nav-button"><a href="home.html">Home</a></button></li>
+            <li><button class="nav-button"><a href="crop.html">Crop</a></button></li>
+            <li><button class="nav-button"><a href="fertilizer.html">Fertilizers</a></button></li>
+            <li><button class="nav-button"><a href="pesticide.html">Pesticides</a></button></li>
+            <li><button class="nav-button active"><a href="about.html">About Us</a></button></li>
+            <li><button class="nav-button"><a href="contact.html">Contact</a></button></li>
+        </ul>
+        <div class="rightNav">
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button class="btn btn-sm">Search</button>
+        </div>
+    </nav>
+
+    <!-- About Us content -->
+    <div class="about-container">
+        <div class="about-content">
+            <h1>About Our Project</h1>
+            <p>Welcome to our agricultural project website! We are dedicated to providing valuable information about crops, fertilizers, pesticides, and more to farmers and enthusiasts alike.</p>
+            <p>Our mission is to empower farmers with the knowledge and tools they need to improve crop yield, optimize resource usage, and make informed decisions about agricultural practices.</p>
+            <p>At our project, you will find comprehensive guides, expert advice, and the latest insights in the field of agriculture. Whether you are a seasoned farmer or just getting started, we are here to support you on your agricultural journey.</p>
+            <p>Feel free to explore our website and discover the wealth of resources we have to offer. If you have any questions or suggestions, please don't hesitate to <a href="contact.html">contact us</a>. We'd love to hear from you!</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 YourWebsite. All rights reserved.
+    </footer>
+</body>
+
+</html>

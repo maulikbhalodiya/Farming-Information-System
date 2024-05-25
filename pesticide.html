@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesticides</title>
+    <link rel="stylesheet" href="pesticide.css">
+    <style>
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50; /* Dark Blue */
+            color: #ffffff; /* White */
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 70px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999; /* Ensure it's above other elements */
+        }
+
+        .btn {
+            background-color: #007bff; /* Blue */
+            color: #ffffff; /* White */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker Blue on hover */
+        }
+
+        /* Autocomplete Styles */
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-top: none;
+            background-color: #2c3e50;
+            z-index: 999;
+            width: 100%;
+            max-height: 200px; /* Set a maximum height for the dropdown menu */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+            color: #ffffff; /* White */
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f1f1f1; /* Add a background color on hover */
+            color: #000000; /* Black */
+        }
+
+        /* Style the input container to position the autocomplete items */
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Style the input field */
+        #search {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #000000; /* Black */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar" style="background-color: #2c3e50; color: #ffffff;">
+        <ul class="nav-list">
+            <li><button class="nav-button"><a href="home.html">Home</a></button></li>
+            <li><button class="nav-button"><a href="crop.html">Crop</a></button></li>
+            <li><button class="nav-button"><a href="fertilizer.html">Fertilizers</a></button></li>
+            <li><button class="nav-button active"><a href="pesticide.html">Pesticides</a></button></li>
+            <li><button class="nav-button"><a href="about.html">About Us</a></button></li>
+            <li><button class="nav-button"><a href="contact.html">Contact</a></button></li>
+        </ul>
+        <div class="rightNav">
+            <!-- Autocomplete container -->
+            <div class="autocomplete">
+                <input type="text" name="search" id="search" placeholder="Search">
+                <div class="autocomplete-items"></div>
+            </div>
+            <button class="btn btn-sm">Search</button>
+        </div>
+    </nav>
+
+    <!-- Display fetched pesticide data -->
+    <div class="pesticide-container">
+        <div id="pesticideDetails" class="pesticide-details">
+            <div class="pesticide-details-content">
+                <!-- Other data goes here -->
+                <h2>Pesticide Name</h2>
+                <p><strong>Description:</strong> Pesticide Description</p>
+                <p><strong>Mode of Action:</strong> Mode of Action</p>
+                <p><strong>Crops:</strong> Crops</p>
+                <p><strong>Dosage per Acre:</strong> Dosage per Acre</p>
+                <p><strong>Pack Size:</strong> Pack Size</p>
+                <p><strong>Features and Benefits:</strong> Features and Benefits</p>
+            </div>
+            <img src="data:image/jpeg;base64,IMAGE_DATA_HERE" alt="Pesticide Name" class="pesticide-image">
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <button id="previousBtn" class="btn" onclick="previousPesticide()">Previous</button>
+        <button id="nextBtn" class="btn" onclick="nextPesticide()">Next</button>
+    </div>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Variables to store fetched pesticide data and current index
+        let pesticides = [];
+        let currentIndex = 0;
+
+        // Function to fetch pesticide data from server
+        function fetchPesticides() {
+            $.get('/pesticides', (data) => {
+                pesticides = data;
+                displayPesticide(currentIndex);
+            });
+        }
+
+        // Function to display pesticide details
+        function displayPesticide(index) {
+            const pesticide = pesticides[index];
+            if (!pesticide || !pesticide.Image || !pesticide.Image.data) {
+                console.error('Error: Image data not available.');
+                return;
+            }
+
+            // Convert image data to base64 string
+            const imageData = arrayBufferToBase64(pesticide.Image.data);
+            if (!imageData) {
+                console.error('Error: Failed to convert image data to base64.');
+                return;
+            }
+
+            // Display pesticide details using jQuery
+            $('#pesticideDetails').html(`
+                <div class="pesticide-details-content">
+                    <h2>${pesticide.ProductName}</h2>
+                    <p><strong>Description:</strong> ${pesticide.Description}</p>
+                    <p><strong>Mode of Action:</strong> ${pesticide.Mode_of_Action}</p>
+                    <p><strong>Crops:</strong> ${pesticide.Crops}</p>
+                    <p><strong>Dosage per Acre:</strong> ${pesticide.Dosage_per_Acre}</p>
+                    <p><strong>Pack Size:</strong> ${pesticide.Pack_Size}</p>
+                    <p><strong>Features and Benefits:</strong> ${pesticide.Features_and_Benefits}</p>
+                    <img src="data:image/jpeg;base64,${imageData}" alt="${pesticide.ProductName}" class="pesticide-image">
+                </div>
+            `);
+        }
+
+        // Function to convert array buffer to base64
+        function arrayBufferToBase64(buffer) {
+            let binary = '';
+            const bytes = new Uint8Array(buffer);
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        // Function to show next pesticide
+        function nextPesticide() {
+            if (currentIndex < pesticides.length - 1) {
+                currentIndex++;
+                displayPesticide(currentIndex);
+            }
+        }
+
+        // Function to show previous pesticide
+        function previousPesticide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayPesticide(currentIndex);
+            }
+        }
+
+        // Load pesticide data when the page is ready
+        $(document).ready(() => {
+            fetchPesticides();
+        });
+
+        // Autocomplete functionality
+        $('#search').on('input', function() {
+            const input = $(this).val().toLowerCase();
+            const suggestions = pesticides.filter(pesticide => pesticide.ProductName.toLowerCase().includes(input));
+            displayAutocomplete(suggestions);
+        });
+
+        function displayAutocomplete(suggestions) {
+            const autocompleteContainer = $('.autocomplete-items');
+            autocompleteContainer.empty();
+            suggestions.forEach(suggestion => {
+                const item = `<div class="autocomplete-item" onclick="selectSuggestion('${suggestion.ProductName}')">${suggestion.ProductName}</div>`;
+                autocompleteContainer.append(item);
+            });
+            autocompleteContainer.toggle(suggestions.length > 0); // Show/hide autocomplete based on suggestions
+        }
+
+        function selectSuggestion(suggestion) {
+            $('#search').val(suggestion);
+            $('.autocomplete-items').empty(); // Clear autocomplete items
+            // Find the selected pesticide
+            const selectedPesticide = pesticides.find(pesticide => pesticide.ProductName === suggestion);
+            if (selectedPesticide) {
+                // Display details of the selected pesticide
+                const selectedIndex = pesticides.indexOf(selectedPesticide);
+                currentIndex = selectedIndex;
+                displayPesticide(selectedIndex);
+            }
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 YourWebsite. All rights reserved.
+    </footer>
+</body>
+
+</html>

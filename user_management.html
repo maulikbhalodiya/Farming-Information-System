@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff; /* White background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0; /* Light gray header background */
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4caf50; /* Green button */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #09120a; /* Darker green on hover */
+        }
+
+        /* Success message */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4caf50; /* Green background */
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User details will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <h2>Edit User</h2>
+        <form id="editForm" method="post" onsubmit="return handleSubmit()">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required><br>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" required><br>
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script>
+        // Fetch user details from the server and populate the table
+        fetch('/user_details')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = '';
+                data.forEach(user => {
+                    const row = `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.password}</td>
+                        <td><button onclick="editUser(${user.id})">Edit</button></td>
+                    </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+            });
+
+        // Function to populate the edit form with user data
+        function editUser(userId) {
+            fetch(`/user_details/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('username').value = data.username;
+                    document.getElementById('email').value = data.email;
+                    document.getElementById('password').value = data.password;
+                    // Set action attribute of the form to point to the correct user ID
+                    document.getElementById('editForm').setAttribute('action', `/edit_user/${userId}`);
+                });
+        }
+
+        // Function to display success message and redirect after 0.5 seconds
+        function displaySuccessAndRedirect() {
+            const successMessage = document.createElement('div');
+            successMessage.textContent = 'User details updated successfully';
+            successMessage.classList.add('success-message');
+            document.body.appendChild(successMessage);
+
+            setTimeout(function() {
+                window.location.href = '/user_management.html';
+            }, 500);
+        }
+    </script>
+    <div class="container">
+        <h1>Suggestions</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="suggestionsTable">
+                <!-- Suggestions will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch suggestions from the server and populate the table
+        fetch('/suggestions')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('suggestionsTable');
+                tableBody.innerHTML = '';
+                data.forEach(suggestion => {
+                    const row = `<tr>
+                        <td>${suggestion.id}</td>
+                        <td>${suggestion.username}</td>
+                        <td>${suggestion.email}</td>
+                        <td>${suggestion.message}</td>
+                    </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+            });
+    </script>
+</body>
+</html>

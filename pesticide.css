@@ -1,0 +1,161 @@
+/* Reset default margin and padding */
+* {
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif; /* Set font family */
+    background-color: lightblue; /* Set background color */
+}
+
+/* Navigation bar styles */
+.navbar {
+    display: flex; /* Display as flexbox */
+    position: sticky; /* Stick to the top */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space evenly between items */
+    top: 0px; /* Stick to the top */
+    background: rgba(70, 123, 80); /* Background color */
+    background-blend-mode: darken; /* Blend mode for background */
+    background-size: cover; /* Cover the entire area */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding */
+}
+
+/* Navigation list styles */
+.nav-list {
+    display: flex; /* Display as flexbox */
+    list-style: none; /* Remove list style */
+}
+
+.nav-list li {
+    margin-right: 20px; /* Right margin for list items */
+}
+
+/* Remove margin from the last list item */
+.nav-list li:last-child {
+    margin-right: 0; /* Remove right margin */
+}
+
+/* Navigation button styles */
+.nav-button {
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+}
+
+.nav-button a {
+    text-decoration: none; /* Remove underline */
+    color: white; /* Text color */
+    font-size: 18px; /* Font size */
+    padding: 8px 12px; /* Padding */
+    border: 2px solid #ffd700; /* Border */
+    border-radius: 7px; /* Border radius */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition */
+}
+
+/* Style for navigation button hover state */
+.nav-button a:hover {
+    background-color: #ffd700; /* Background color on hover */
+    color: #000; /* Text color on hover */
+}
+
+/* Styles for the right navigation section */
+.rightNav {
+    text-align: right; /* Align text to the right */
+}
+
+/* Styles for the search input */
+#search {
+    padding: 8px; /* Padding */
+    font-size: 16px; /* Font size */
+    border: 2px solid #fff; /* Border */
+    border-radius: 5px; /* Border radius */
+}
+
+/* Button styles */
+.btn {
+    background-color: #ffd700; /* Background color */
+    color: #000; /* Text color */
+    border: none; /* Remove border */
+    padding: 8px 12px; /* Padding */
+    border-radius: 7px; /* Border radius */
+    cursor: pointer; /* Cursor style */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition */
+}
+
+/* Style for button hover state */
+.btn:hover {
+    background-color: #000; /* Background color on hover */
+    color: #ffd700; /* Text color on hover */
+}
+
+/* Pagination styles */
+.pagination {
+    position: fixed; /* Fixed position */
+    bottom: 20px; /* Distance from the bottom */
+    left: 50%; /* Position from the left */
+    transform: translateX(-50%); /* Center horizontally */
+    display: flex; /* Display as flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+/* Style for pagination buttons */
+.pagination button {
+    margin: 0 10px; /* Margin between buttons */
+}
+
+/* Pesticide details container styles */
+.pesticide-details {
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    padding: 20px; /* Padding */
+    border-radius: 10px; /* Border radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Drop shadow effect */
+    max-width: 800px; /* Maximum width of the box */
+    max-height: 800px; /* Maximum height of the box */
+    margin: 50px auto; /* Center the box horizontally and add 50px space from the top */
+}
+
+/* Styles for pesticide details content */
+
+
+/* Styles for pesticide details image */
+.pesticide-details img {
+    max-width: 100%; /* Make sure the image doesn't exceed the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image */
+    margin: 0 auto; /* Center the image */
+    width: 300px; /* Fixed width for the image */
+    height: 350px; /* Fixed height for the image */
+}
+
+/* Media Queries for Responsive Design */
+@media only screen and (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .navbar {
+        flex-direction: column; /* Arrange vertically */
+        align-items: stretch; /* Stretch items */
+    }
+
+    .nav-list {
+        flex-direction: column; /* Arrange vertically */
+        align-items: stretch; /* Stretch items */
+    }
+
+    .nav-list li {
+        margin-right: 0; /* Remove right margin */
+        margin-bottom: 10px; /* Bottom margin */
+    }
+
+    .rightNav {
+        text-align: center; /* Align text to the center */
+        margin-top: 10px; /* Top margin */
+    }
+
+    #search {
+        width: 100%; /* Full width */
+    }
+}

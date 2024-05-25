@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Fertilizer</title>
+</head>
+<style>
+    /* Reset default margin and padding */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #E9F1FA; /* Light gray background */
+        color: #333;
+        padding: 20px;
+    }
+
+    /* Form container styles */
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff; /* White background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form title styles */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        font-weight: bold;
+    }
+
+    /* Input styles */
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Button styles */
+    button {
+        background-color: #4caf50; /* Green button */
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-right: 10px;
+    }
+
+    /* Style for button hover state */
+    button:hover {
+        background-color: #09120a; /* Darker green on hover */
+    }
+
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0; /* Light gray header background */
+    }
+
+</style>
+
+<body>
+    <h1>Edit Fertilizer</h1>
+    
+    <form id="editFertilizerForm" action="/submit_fertilizer" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="fertilizerId" name="id" value="">
+        <label for="Name">Name:</label>
+        <input type="text" id="Name" name="Name" required><br><br>
+
+        <label for="Use">Use:</label>
+        <input type="text" id="Use" name="Use" required><br><br>
+
+        <label for="Components">Components:</label>
+        <input type="text" id="Components" name="Components" required><br><br>
+
+        <label for="Description">Description:</label><br>
+        <textarea id="Description" name="Description" rows="4" required></textarea><br><br>
+
+        <label for="Image">Image:</label>
+        <input type="file" id="Image" name="image" accept="image/png" required><br><br>
+
+        <!-- Button for updating fertilizer -->
+        <button type="submit" id="updateButton">Update Fertilizer</button>
+
+        <!-- Button for inserting new fertilizer -->
+        <button type="button" id="insertButton">Insert New Fertilizer</button>
+    </form>
+
+    <!-- Table to display fertilizer details -->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Use</th>
+                <th>Components</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="fertilizerTableBody">
+            <!-- Fertilizer details will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Script to populate form with fertilizer data and handle button actions -->
+    <script>
+        // Function to fetch fertilizer details and populate the form
+        function populateFertilizerForm(fertilizerId) {
+            fetch(`/fertilizer_details/${fertilizerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('fertilizerId').value = data.id;
+                    document.getElementById('Name').value = data.Name;
+                    document.getElementById('Use').value = data.Use;
+                    document.getElementById('Components').value = data.Components;
+                    document.getElementById('Description').value = data.Description;
+                    // You may need additional code to handle image display or preview
+                });
+        }
+
+        // Call populateFertilizerForm function with the fertilizer ID if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const fertilizerId = urlParams.get('id');
+        if (fertilizerId) {
+            populateFertilizerForm(fertilizerId);
+        }
+
+        // Button click event for inserting new fertilizer
+        document.getElementById('insertButton').addEventListener('click', () => {
+            // Get the values of the fertilizer details from the form
+            const Name = document.getElementById('Name').value;
+            const Use = document.getElementById('Use').value;
+            const Components = document.getElementById('Components').value;
+            const Description = document.getElementById('Description').value;
+            const Image = document.getElementById('Image').files[0];
+
+            // Create a FormData object to store the fertilizer details
+            const formData = new FormData();
+            formData.append('Name', Name);
+            formData.append('Use', Use);
+            formData.append('Components', Components);
+            formData.append('Description', Description);
+            formData.append('image', Image);
+
+            // Send an AJAX request to insert the fertilizer data into the database
+            fetch('/insert_fertilizer', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Fertilizer inserted successfully');
+                    // Redirect to the admin dashboard page after successful insertion
+                    window.location.href = '/admin_dashboard.html';
+                } else {
+                    throw new Error('Failed to insert fertilizer');
+                }
+            })
+            .catch(error => {
+                console.error('Error inserting fertilizer:', error);
+                alert('Failed to insert fertilizer');
+            });
+        });
+
+        // Fetch and display all fertilizer details in the table
+        fetch('/all_fertilizers')
+            .then(response => response.json())
+            .then(fertilizers => {
+                const fertilizerTableBody = document.getElementById('fertilizerTableBody');
+                fertilizers.forEach(fertilizer => {
+                    const row = `<tr>
+                        <td>${fertilizer.Name}</td>
+                        <td>${fertilizer.Use}</td>
+                        <td>${fertilizer.Components}</td>
+                        <td>${fertilizer.Description}</td>
+                        <td>
+                            <button onclick="populateFertilizerForm(${fertilizer.id})">Edit</button>
+                            <button onclick="deleteFertilizer(${fertilizer.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                    fertilizerTableBody.insertAdjacentHTML('beforeend', row);
+                });
+            });
+
+        // Function to delete fertilizer
+        function deleteFertilizer(fertilizerId) {
+            if (confirm('Are you sure you want to delete this fertilizer?')) {
+                fetch(`/delete_fertilizer/${fertilizerId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Refresh the page after successful deletion
+                        location.reload();
+                    } else {
+                        throw new Error('Failed to delete fertilizer');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting fertilizer:', error);
+                    alert("Failed to delete fertilizer");
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

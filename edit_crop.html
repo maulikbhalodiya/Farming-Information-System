@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Crop</title>
+</head>
+<style>
+    /* Reset default margin and padding */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #E9F1FA; /* Light gray background */
+        color: #333;
+        padding: 20px;
+    }
+
+    /* Form container styles */
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff; /* White background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form title styles */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        font-weight: bold;
+    }
+
+    /* Input styles */
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Button styles */
+    button {
+        background-color: #4caf50; /* Green button */
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-right: 10px;
+    }
+
+    /* Style for button hover state */
+    button:hover {
+        background-color: #09120a; /* Darker green on hover */
+    }
+
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0; /* Light gray header background */
+    }
+
+</style>
+
+<body>
+    <h1>Edit Crop</h1>
+    
+    <form id="editCropForm" action="/submit_crop" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="cropId" name="id" value="">
+        <label for="CropName">Crop Name:</label>
+        <input type="text" id="CropName" name="CropName" required><br><br>
+
+        <label for="Temperature">Temperature:</label>
+        <input type="text" id="Temperature" name="Temperature" required><br><br>
+
+        <label for="Duration">Duration:</label>
+        <input type="text" id="Duration" name="Duration" required><br><br>
+
+        <label for="Description">Description:</label><br>
+        <textarea id="Description" name="Description" rows="4" required></textarea><br><br>
+
+        <label for="ProfitableSoilType">Profitable Soil Type:</label>
+        <input type="text" id="ProfitableSoilType" name="ProfitableSoilType" required><br><br>
+
+        <label for="PriceRange">Price Range:</label>
+        <input type="text" id="PriceRange" name="PriceRange" required><br><br>
+
+        <label for="Image">Image:</label>
+        <input type="file" id="Image" name="image" accept="image/png" required><br><br>
+
+        <!-- Button for updating crop -->
+        <button type="submit" id="updateButton">Update Crop</button>
+
+        <!-- Button for inserting new crop -->
+        <button type="button" id="insertButton">Insert New Crop</button>
+    </form>
+
+    <!-- Table to display crop details -->
+    <table>
+        <thead>
+            <tr>
+                <th>Crop Name</th>
+                <th>Temperature</th>
+                <th>Duration</th>
+                <th>Description</th>
+                <th>Profitable Soil Type</th>
+                <th>Price Range</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="cropTableBody">
+            <!-- Crop details will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Script to populate form with crop data and handle button actions -->
+    <script>
+        // Function to fetch crop details and populate the form
+        function populateCropForm(cropId) {
+            fetch(`/crop_details/${cropId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cropId').value = data.id;
+                    document.getElementById('CropName').value = data.CropName;
+                    document.getElementById('Temperature').value = data.Temperature;
+                    document.getElementById('Duration').value = data.Duration;
+                    document.getElementById('Description').value = data.Description;
+                    document.getElementById('ProfitableSoilType').value = data.ProfitableSoilType;
+                    document.getElementById('PriceRange').value = data.PriceRange;
+                    // You may need additional code to handle image display or preview
+                });
+        }
+
+        // Call populateCropForm function with the crop ID if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const cropId = urlParams.get('id');
+        if (cropId) {
+            populateCropForm(cropId);
+        }
+
+        // Button click event for inserting new crop
+        document.getElementById('insertButton').addEventListener('click', () => {
+    // Get the values of the crop details from the form
+    const CropName = document.getElementById('CropName').value;
+    const Temperature = document.getElementById('Temperature').value;
+    const Duration = document.getElementById('Duration').value;
+    const Description = document.getElementById('Description').value;
+    const ProfitableSoilType = document.getElementById('ProfitableSoilType').value;
+    const PriceRange = document.getElementById('PriceRange').value;
+    const Image = document.getElementById('Image').files[0];
+
+    // Create a FormData object to store the crop details
+    const formData = new FormData();
+    formData.append('CropName', CropName);
+    formData.append('Temperature', Temperature);
+    formData.append('Duration', Duration);
+    formData.append('Description', Description);
+    formData.append('ProfitableSoilType', ProfitableSoilType);
+    formData.append('PriceRange', PriceRange);
+    formData.append('image', Image);
+
+    // Send an AJAX request to insert the crop data into the database
+    fetch('/insert_crop', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Crop inserted successfully');
+            // Redirect to the admin dashboard page after successful insertion
+            window.location.href = '/admin_dashboard.html';
+        } else {
+            throw new Error('Failed to insert crop');
+        }
+    })
+    .catch(error => {
+        console.error('Error inserting crop:', error);
+        alert('Failed to insert crop');
+    });
+});
+
+
+        // Fetch and display all crop details in the table
+        fetch('/all_crops')
+            .then(response => response.json())
+            .then(crops => {
+                const cropTableBody = document.getElementById('cropTableBody');
+                crops.forEach(crop => {
+                    const row = `<tr>
+                        <td>${crop.CropName}</td>
+                        <td>${crop.Temperature}</td>
+                        <td>${crop.Duration}</td>
+                        <td>${crop.Description}</td>
+                        <td>${crop.ProfitableSoilType}</td>
+                        <td>${crop.PriceRange}</td>
+                        <td>
+                            <button onclick="populateCropForm(${crop.id})">Edit</button>
+                            <button onclick="deleteCrop(${crop.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                    cropTableBody.insertAdjacentHTML('beforeend', row);
+                });
+            });
+
+        // Function to delete crop
+        function deleteCrop(cropId) {
+            if (confirm('Are you sure you want to delete this crop?')) {
+                fetch(`/delete_crop/${cropId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Refresh the page after successful deletion
+                        location.reload();
+                    } else {
+                        throw new Error('Failed to delete crop');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting crop:', error);
+                    alert("Failed to delete crop");
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

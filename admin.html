@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Meta tags for character set and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the page -->
+    <title>Admin Login</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <!-- Background element -->
+    <div class="bg"></div>
+
+    <!-- Main container -->
+    <div class="container">
+        <!-- Content section -->
+        <div class="content">
+            <p>Welcome Admin</p>
+        </div>
+        <!-- Login/Register box -->
+        <div class="logreg-box">
+            <!-- Login form box -->
+            <div class="form-box login">
+                <!-- Login form -->
+                <form id="adminLoginForm">
+                    <!-- Heading -->
+                    <h2>Admin Log In</h2>
+                    <!-- Username input field -->
+                    <div class="input-box">
+                        <input type="text" id="adminUsername" required>
+                        <label>Username</label>
+                    </div>
+                    <!-- Password input field -->
+                    <div class="input-box">
+                        <input type="password" id="adminPassword" required>
+                        <label>Password</label>
+                    </div>
+                    <!-- Submit button -->
+                    <button class="btn" type="submit">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to handle form submission -->
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var username = document.getElementById('adminUsername').value;
+            var password = document.getElementById('adminPassword').value;
+
+            // Here, you would typically perform validation and authentication
+            // For the sake of simplicity, I'm assuming a simple check
+
+            if (username === "admin" && password === "admin") { // Replace with actual validation
+                window.location.href = "admin_dashboard.html"; // Redirect to admin dashboard
+            } else {
+                alert("Invalid username or password. Please try again."); // Show error message
+            }
+        });
+    </script>
+</body>
+</html>

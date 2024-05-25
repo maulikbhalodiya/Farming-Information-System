@@ -9,20 +9,54 @@
 <body>
     <div class="bg"></div>
     <div class="container">
-        <div class="form-box verify-otp">
-            <form action="/verify-otp" method="POST">
-                <h2>Verify OTP and Reset Password</h2>
-                <div class="input-box">
-                    <input type="text" name="otp" required>
-                    <label>OTP</label>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="newPassword" required>
-                    <label>New Password</label>
-                </div>
-                <input class="btn" type="submit" value="Reset Password">
-            </form>
+        <!-- Content Section -->
+        <div class="content">
         </div>
+        <!-- Login/Register Box -->
+        <div class="logreg-box">
+            <!-- Login form box -->
+            <div class="form-box login">
+                <form action="/verify-otp" method="POST">
+                    <h2>Verify OTP and Reset Password</h2>
+                    <div class="input-box">
+                        <input type="text" name="otp" required>
+                        <label>OTP</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="newPassword" required>
+                        <label>New Password</label>
+                    </div>
+                    <input class="btn" type="submit" value="Reset Password">
+                </form>
+                
+            </div>
+            <!-- Forgot Password form -->
+            <div id="forgot-password" class="form-box forgot-password" style="display: none;">
+                <form action="/forgot-password" method="POST">
+                    <h2>Forgot Password</h2>
+                    <div class="input-box">
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <input class="btn" type="submit" value="Send OTP">
+                </form>
+            </div>
+            <!-- OTP Verification and Password Reset form -->
+            <div class="form-box verify-otp" style="display: none;">
+                <form action="/verify-otp" method="POST">
+                    <h2>Verify OTP and Reset Password</h2>
+                    <div class="input-box">
+                        <input type="text" name="otp" required>
+                        <label>OTP</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="newPassword" required>
+                        <label>New Password</label>
+                    </div>
+                    <input class="btn" type="submit" value="Reset Password">
+                </form>
+            </div>
+        </div> 
     </div>
 </body>
 </html>
